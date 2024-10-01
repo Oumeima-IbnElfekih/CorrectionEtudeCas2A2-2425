@@ -1,4 +1,5 @@
-// Correctio partie 3 etude de cas Partie JS
+
+// Correction partie 3 etude de cas Partie JS
 
 document.addEventListener("DOMContentLoaded", function(){
 
