@@ -1,3 +1,8 @@
+<?php
+include '../../controller/TravelOfferController.php';
+$travelOfferC = new TravelOfferController();
+$list = $travelOfferC->listOffre();
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -29,7 +34,7 @@
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Travel offers</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#about">About</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#contact">Contact</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#" onclick="alert('ceci est un dashboard')">Dashboard</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="./../BackOffice/offerList.php" >Dashboard</a></li>
 
                   </ul>
             </div>
@@ -62,27 +67,25 @@
         </div>
      
         <div class="row justify-content-center">
-   
+        <?php
+        foreach ($list as $offer) {
+        ?> 
             <div class="col-md-6 col-lg-4 mb-5">
                 <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
                     
                     <img class="img-fluid" src="assets/img/circus.png" alt="..." />
                 </div>
+                <div class="portfolio-caption" align="center">
+            <h4><?php echo $offer['destination']; ?></h4>
+            <p class="text-muted"><?php echo $offer['destination']; ?></p>
+            <p class="text-muted">Price: <?php echo $offer['price']; ?> $</p>
+          </div>
             </div>
       
-            <div class="col-md-6 col-lg-4 mb-5">
-                <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal2">
-                    
-                    <img class="img-fluid" src="assets/img/submarine.png" alt="..." />
-                </div>
-            </div>
-       
-            <div class="col-md-6 col-lg-4 mb-5">
-                <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal3">
-                    
-                    <img class="img-fluid" src="assets/img/cabin.png" alt="..." />
-                </div>
-            </div>
+            <?php
+    }
+    ?>
+          
            
         </div>
     </div>

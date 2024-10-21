@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -44,7 +45,11 @@
                         <span>Dashboard</span></a>
                 </li>
     
-             
+                <li class="nav-item active">
+                    <a class="nav-link" href="offerList.php">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Travel Offer List</span></a>
+                </li>
     
     
             </ul>
@@ -83,49 +88,43 @@
                         <div class="row">
     
                             <!-- Earnings (Monthly) Card Example -->
-                            <div class="col-xl-8 col-md-6 mb-4">
+                            <div class="col-xl-12 col-md-6 mb-4">
                                 <div class="card border-left-primary shadow h-100 py-2">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             
-                                            <form id="addTravelOfferForm">
+                                            <form id="addTravelOfferForm" action="" method="POST">
                                                 <label for="title">Title:</label><br>
                                                 <input class="form-control form-control-user" type="text" id="title" name="title" >
-                                                <span id="titre_error"></span>
-                                             <br>
+                                                <span id="title_error"></span><br>
+                                             
                                         
                                                 <label for="destination">Destination:</label><br>
                                                 <input class="form-control form-control-user" type="text" id="destination" name="destination" >
-                                                <span id="destination_error"></span>
-                                                <br>
+                                                <span id="destination_error"></span><br>
                                         
                                                 <label for="departure_date">Departure Date:</label><br>
                                                 <input class="form-control form-control-user" type="date" id="departure_date" name="departure_date" >
-
-                                                <span id="departure_date_error"></span>
-
-                                                <br>
+                                                <span id="departure_date_error"></span><br>
                                         
                                                 <label for="return_date">Return Date:</label><br>
                                                 <input class="form-control form-control-user" type="date" id="return_date" name="return_date" >
-                                                <span id="return_date_error"></span>
-                                                <br>
+                                                <span id="return_date_error"></span><br>
                                         
                                                 <label for="price">Price :</label><br>
                                                 <input class="form-control form-control-user"  type="number" id="price" name="price" step="0.01" >
-                                                <span id="price_error"></span>
-                                                <br>
+                                                <span id="price_error"></span><br>
                                         
                                                 
                                                 <div class="form-group">
                                                     <div class="custom-control custom-checkbox small">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck">
+                                                        <input type="checkbox" class="custom-control-input" id="customCheck" name="disponible">
                                                         <label class="custom-control-label" for="customCheck">Availability
                                                             </label>
                                                     </div>
                                                 </div>
                                                 <label for="category">Category:</label><br>
-                                                <select class="form-control form-control-user" id="category" name="category" title="Select the category of the travel offer.">
+                                                <select class="form-control form-control-user" id="category" name="category" >
                                                     <option value="adventure">Adventure</option>
                                                     <option value="relaxation">Relaxation</option>
                                                     <option value="culture">Culture</option>
@@ -133,8 +132,14 @@
                                                 </select>
                                            <br>
                                         
-                                                <button type="submit" class="btn btn-primary btn-user btn-block">Add Offer</button>
-
+                                                <button type="submit" 
+                                                class="btn btn-primary btn-user btn-block" 
+                                                onClick="validerFormulaire()"
+                                                >Add Offer</button> 
+                                                <!-- <button type="submit" 
+                                                class="btn btn-primary btn-user btn-block" 
+                                                
+                                                >Add Offer</button> -->
                                             </form>
                                         </div>
                                     </div>
@@ -168,7 +173,7 @@
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
-    
+        <script src="js/addOffer.js"></script>
     
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
@@ -186,7 +191,7 @@
         <!-- Page level custom scripts -->
         <script src="js/demo/chart-area-demo.js"></script>
         <script src="js/demo/chart-pie-demo.js"></script>
-            <script src="./js/addOffer.js"></script>
+    
     </body>
 
 </html>
