@@ -11,13 +11,13 @@ $offerController = new TravelOfferController();
 
 
 if (
-    isset($_POST["title"])  && $_POST["destination"] && $_POST["departure_date"] && $_POST["return_date"] && $_POST["price"]  && $_POST["category"]
+    isset($_POST["title"])  && $_POST["destination"] && $_POST["departure_date"] && $_POST["return_date"] && $_POST["price"] && $_POST["category"]
 ) {
     if (
-        !empty($_POST["title"])  && !empty($_POST["destination"]) && !empty($_POST["departure_date"]) && !empty($_POST["return_date"]) && !empty($_POST["price"]) && !empty($_POST["category"])
+        !empty($_POST["title"])  && !empty($_POST["destination"]) && !empty($_POST["departure_date"]) && !empty($_POST["return_date"]) && !empty($_POST["price"])  && !empty($_POST["category"])
     
     ) {
-        $disponible = isset($_POST['disponible']) ? true : false;
+        $disponible = isset($_POST['disponible']) ? true : false;   
         $offer = new TravelOffer(
             null,
             $_POST['title'],
@@ -25,18 +25,17 @@ if (
             new DateTime($_POST['departure_date']),
             new DateTime($_POST['return_date']),
             $_POST['price'],
-            $disponible,
+            $disponible ,
             $_POST['category']
         );
         //
-            
-        $offerController->addOffer($offer);
+        
+        $offerController->updateOffer($offer, $_POST['id']);
 
        header('Location:offerList.php');
     } else
         $error = "Missing information";
 }
-
 
 
 
@@ -51,7 +50,7 @@ if (
         <meta name="description" content="">
         <meta name="author" content="">
     
-        <title>Add Travel Offer - Dashboard</title>
+        <title>Update Travel Offer - Dashboard</title>
     
         <!-- Custom fonts for this template-->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -86,11 +85,12 @@ if (
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
+                
     
                 <li class="nav-item active">
                     <a class="nav-link" href="offerList.php">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Travel Offer List</span></a>
+                        <span>Back to travel Offer List</span></a>
                 </li>
     
     
@@ -123,7 +123,7 @@ if (
     
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Add a Travel Offer</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Update the travel Offer with Id = <?php echo $_POST['id'] ?> </h1>
                                   </div>
     
                         <!-- Content Row -->
@@ -134,39 +134,45 @@ if (
                                 <div class="card border-left-primary shadow h-100 py-2">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
-                                            
+                                        <?php
+    if (isset($_POST['id'])) {
+        $offer = $offerController->showOffer($_POST['id']);
+       
+    ?>
                                             <form id="addTravelOfferForm" action="" method="POST">
+                                            <label for="id">ID Offer:</label><br>
+                                            <input class="form-control form-control-user" type="text" id="id" name="id" readonly value="<?php echo $_POST['id'] ?>">
                                                 <label for="title">Title:</label><br>
-                                                <input class="form-control form-control-user" type="text" id="title" name="title" >
+                                                <input class="form-control form-control-user" type="text" id="title" name="title" value="<?php echo $offer['title'] ?>" >
                                                 <span id="title_error"></span><br>
                                              
                                         
                                                 <label for="destination">Destination:</label><br>
-                                                <input class="form-control form-control-user" type="text" id="destination" name="destination" >
+                                                <input class="form-control form-control-user" type="text" id="destination" name="destination" value="<?php echo $offer['destination'] ?>" >
                                                 <span id="destination_error"></span><br>
                                         
                                                 <label for="departure_date">Departure Date:</label><br>
-                                                <input class="form-control form-control-user" type="date" id="departure_date" name="departure_date" >
+                                                <input class="form-control form-control-user" type="date" id="departure_date" name="departure_date" value="<?php echo $offer['departure_date'] ?>" >
                                                 <span id="departure_date_error"></span><br>
                                         
                                                 <label for="return_date">Return Date:</label><br>
-                                                <input class="form-control form-control-user" type="date" id="return_date" name="return_date" >
+                                                <input class="form-control form-control-user" type="date" id="return_date" name="return_date" value="<?php echo $offer['departure_date'] ?>">
                                                 <span id="return_date_error"></span><br>
                                         
                                                 <label for="price">Price :</label><br>
-                                                <input class="form-control form-control-user"  type="number" id="price" name="price" step="0.01" >
+                                                <input class="form-control form-control-user"  type="number" id="price" name="price" step="0.01" value="<?php echo $offer['price'] ?>">
                                                 <span id="price_error"></span><br>
                                         
                                                 
                                                 <div class="form-group">
                                                     <div class="custom-control custom-checkbox small">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck" name="disponible">
+                                                        <input type="checkbox" class="custom-control-input" id="customCheck" name="disponible"  <?php echo (isset($offer['disponible']) && $offer['disponible'] == 1) ? 'checked' : ''; ?> >
                                                         <label class="custom-control-label" for="customCheck">Availability
                                                             </label>
                                                     </div>
                                                 </div>
                                                 <label for="category">Category:</label><br>
-                                                <select class="form-control form-control-user" id="category" name="category" >
+                                                <select class="form-control form-control-user" id="category" name="category" value="<?php echo $offer['category'] ?>">
                                                     <option value="adventure">Adventure</option>
                                                     <option value="relaxation">Relaxation</option>
                                                     <option value="culture">Culture</option>
@@ -183,6 +189,9 @@ if (
                                                 
                                                 >Add Offer</button> -->
                                             </form>
+                                            <?php
+    }
+    ?>
                                         </div>
                                     </div>
                                 </div>
